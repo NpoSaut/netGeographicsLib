@@ -28,25 +28,25 @@ namespace Geographics
             return new EarthPoint(XToLongitude(p.X), YToLatitude(p.Y));
         }
 
-        /// <summary>Преобразует широту в вертикальную координату на плоскости</summary>
+        /// <summary>Преобразует вертикальную координату на плоскости в широту</summary>
         public static Degree YToLatitude(double y)
         {
             return new Radian(2 * Math.Atan(Math.Exp(y * Math.PI / 180)) - Math.PI / 2);
         }
 
-        /// <summary>Преобразует вертикальную координату на плоскости в широту</summary>
+        /// <summary>Преобразует широту в вертикальную координату на плоскости</summary>
         public static double LatitudeToY(Degree Latitude)
         {
-            return R * 180.0 / Math.PI * Math.Log(Math.Tan(Math.PI / 4.0 + (Radian)Latitude / 2));
+            return R * Math.Log(Math.Tan(Math.PI / 4.0 + (Radian)Latitude / 2));
         }
 
-        /// <summary>Преобразует долготу в горизонтальную координату на плоскости</summary>
+        /// <summary>Преобразует горизонтальную координату на плоскости в долготу</summary>
         public static Degree XToLongitude(double x)
         {
             return new Radian(x / R);
         }
 
-        /// <summary>Преобразует горизонтальную координату на плоскости в долготу</summary>
+        /// <summary>Преобразует долготу в горизонтальную координату на плоскости</summary>
         public static double LongitudeToX(Degree Longitude)
         {
             return R * (Radian)Longitude;
