@@ -8,9 +8,9 @@
         private Degree _longitude;
 
         /// <summary>Создаёт новую точку со сферическими координатами</summary>
-        /// <param name="Longitude">Долгота</param>
         /// <param name="Latitude">Широта</param>
-        public EarthPoint(Degree Longitude, Degree Latitude)
+        /// <param name="Longitude">Долгота</param>
+        public EarthPoint(Degree Latitude, Degree Longitude)
         {
             _latitude = Latitude;
             _longitude = Longitude;

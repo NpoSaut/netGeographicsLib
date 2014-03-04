@@ -25,7 +25,7 @@ namespace Geographics
         /// <returns>Координаты точки на сфере</returns>
         public static EarthPoint Inverse(SurfacePoint p)
         {
-            return new EarthPoint(XToLongitude(p.X), YToLatitude(p.Y));
+            return new EarthPoint(YToLatitude(p.Y), XToLongitude(p.X));
         }
 
         /// <summary>Преобразует вертикальную координату на плоскости в широту</summary>
