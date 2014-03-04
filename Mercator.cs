@@ -31,7 +31,7 @@ namespace Geographics
         /// <summary>Преобразует вертикальную координату на плоскости в широту</summary>
         public static Degree YToLatitude(double y)
         {
-            return new Radian(2 * Math.Atan(Math.Exp(y * Math.PI / 180)) - Math.PI / 2);
+            return new Radian(2 * Math.Atan(Math.Exp(y / R)) - Math.PI / 2);
         }
 
         /// <summary>Преобразует широту в вертикальную координату на плоскости</summary>

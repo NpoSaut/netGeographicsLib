@@ -7,17 +7,17 @@ namespace Geographics
     /// </summary>
     public struct Degree
     {
-        private double _Value;
+        private double _value;
         /// <summary>
         /// Значение величины угла в градусах
         /// </summary>
         public double Value
         {
-            get { return _Value; }
-            set { _Value = value; }
+            get { return _value; }
+            set { _value = value; }
         }
 
-        public Degree(Double value) { _Value = value; }
+        public Degree(Double value) { _value = value; }
 
         public static implicit operator Double(Degree v) { return v.Value; }
         public static implicit operator Degree(Double v) { return new Degree(v); }
@@ -27,7 +27,7 @@ namespace Geographics
 
         public override string ToString()
         {
-            return string.Format("{0:F4}°", Value.ToString());
+            return string.Format("{0:F4}°", Value);
         }
     }
 }
