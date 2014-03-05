@@ -30,6 +30,15 @@
             set { _longitude = value; }
         }
 
+        /// <summary>Проверяет, попадает ли точка в заданную прямоугольную область</summary>
+        /// <param name="Area">Прямоугольная область</param>
+        /// <returns>True, если точка лежит внутри заданной прямоугольной области</returns>
+        public bool IsInArea(EarthArea Area)
+        {
+            return Longitude >= Area.MostWesternLongitude && Longitude <= Area.MostEasternLongitude &&
+                   Latitude >= Area.MostSouthernLatitude && Latitude <= Area.MostNorthenLatitude;
+        }
+
         public override string ToString() { return string.Format("{0} {1}", Latitude, Longitude); }
     }
 }

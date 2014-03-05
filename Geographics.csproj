@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Degree.cs" />
+    <Compile Include="EarthArea.cs" />
     <Compile Include="EarthPoint.cs" />
     <Compile Include="Mercator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
