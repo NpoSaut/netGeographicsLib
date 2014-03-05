@@ -51,5 +51,25 @@ namespace Geographics
         {
             return R * (Radian)Longitude;
         }
+
+        /// <summary>Возвращает расстояние между точками по теореме гаверсинусов</summary>
+        /// <param name="p1">Первая точка</param>
+        /// <param name="p2">Вторая точка</param>
+        /// <returns>Расстояние между точками в метрах</returns>
+        public static Double DistanceTo(this EarthPoint p1, EarthPoint p2)
+        {
+            return 2 * R * Math.Asin(Math.Sqrt(EstimateDistances(p1, p2)));
+        }
+
+        /// <summary>Оценивает расстояние между двумя точками</summary>
+        /// <param name="p1">Первая точка</param>
+        /// <param name="p2">Вторая точка</param>
+        /// <returns>Величина, пропорциональная расстоянию между указанными точками</returns>
+        public static Double EstimateDistances(this EarthPoint p1, EarthPoint p2)
+        {
+            return Math.Pow(Math.Sin((Radian)(p2.Latitude - p1.Latitude) / 2), 2)
+                   + Math.Cos((Radian)p1.Latitude) * Math.Cos((Radian)p2.Latitude)
+                   * Math.Pow(Math.Sin(((Radian)p2.Longitude - (Radian)p1.Longitude) / 2), 2);
+        }
     }
 }
