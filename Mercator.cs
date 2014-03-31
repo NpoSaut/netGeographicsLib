@@ -53,24 +53,21 @@ namespace Geographics
         }
 
         /// <summary>Возвращает расстояние между точками по теореме гаверсинусов</summary>
-        /// <remarks>
-        /// Для вычисления расстояния между точками на поверхности земного шара можно использовать формулу, известную в сферической геометрии и геодезии
-        /// S = 111,2×arccos(sin φ1 × sin φ2 + cos φ1 × cos φ2 × cos (L2-L1)),
-        /// где S - расстояние, км;
-        /// φ1 и L1 - широта и долгота точки 1 (для северной широты и восточной долготы со знаком плюс, для южной широты и западной долготы со знаком минус), градусы;
-        /// φ2 и L2 - широта и долгота точки 2, градусы;
-        /// константа 111,2 - средняя длина дуги в один градус на поверхности Земли, км.
-        /// <see href="http://mk.semico.ru/dr_info19.htm">Расстояние между точками на поверхности Земли</see>
-        /// </remarks>
+        /// <seealso href="http://en.wikipedia.org/wiki/Haversine_formula" />
         /// <param name="p1">Первая точка</param>
         /// <param name="p2">Вторая точка</param>
         /// <returns>Расстояние между точками в метрах</returns>
         public static Double DistanceTo(this EarthPoint p1, EarthPoint p2)
         {
-            return 111.2 * 1000
-                   * Math.Acos(Math.Sin((Radian)p1.Latitude) * Math.Sin((Radian)p2.Latitude)
-                               + Math.Cos((Radian)p1.Latitude) * Math.Cos((Radian)p2.Latitude)
-                               * Math.Cos((Radian)(p2.Longitude - p1.Longitude)));
+            return 2 * R
+                   * Math.Asin(
+                               Math.Sqrt(HaverSin((Radian)p2.Latitude - (Radian)p1.Latitude)
+                                         + Math.Cos((Radian)p1.Latitude) * Math.Cos((Radian)p2.Latitude)
+                                         * HaverSin((Radian)p2.Longitude - (Radian)p1.Longitude)));
         }
+
+        // ReSharper disable once IdentifierTypo
+        /// <summary>Вычисляет гаверсинус угла</summary>
+        private static Double HaverSin(Double x) { return Math.Pow(Math.Sin(x / 2.0), 2); }
     }
 }
