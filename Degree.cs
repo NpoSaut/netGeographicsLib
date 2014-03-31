@@ -26,6 +26,12 @@ namespace Geographics
         public Radian ToRadian() { return new Radian(Value * Math.PI / 180.0); }
         public static implicit operator Radian(Degree v) { return v.ToRadian(); }
 
+        public static Degree operator +(Degree v1, Degree v2) { return new Degree(v1.Value + v2.Value); }
+        public static Degree operator -(Degree v1, Degree v2) { return new Degree(v1.Value - v2.Value); }
+        public static Degree operator *(Double m, Degree val) { return new Degree(m * val.Value); }
+        public static Degree operator *(Degree val, Double m) { return new Degree(m * val.Value); }
+        public static Degree operator /(Degree val, Double m) { return new Degree(val.Value / m); }
+
         public override string ToString() { return string.Format("{0:F4}°", Value); }
     }
 }
