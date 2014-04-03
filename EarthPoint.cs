@@ -1,4 +1,6 @@
-﻿namespace Geographics
+﻿using System;
+
+namespace Geographics
 {
     /// <summary>Представляет проекцию точки на земную сферу</summary>
     public struct EarthPoint
@@ -37,6 +39,17 @@
         {
             return Longitude >= Area.MostWesternLongitude && Longitude <= Area.MostEasternLongitude &&
                    Latitude >= Area.MostSouthernLatitude && Latitude <= Area.MostNorthenLatitude;
+        }
+
+        /// <summary>Получает точку, лежащую между указанными точками</summary>
+        /// <param name="Point1">Точка 1</param>
+        /// <param name="Point2">Точка 2</param>
+        /// <param name="Ratio">Доля участка между точками 1 и 2</param>
+        public static EarthPoint MiddlePoint(EarthPoint Point1, EarthPoint Point2, Double Ratio = 0.5)
+        {
+            return new EarthPoint(
+                (1 - Ratio) * Point1.Latitude + Ratio * Point2.Latitude,
+                (1 - Ratio) * Point1.Longitude + Ratio * Point2.Longitude);
         }
 
         public override string ToString() { return string.Format("{0} {1}", Latitude, Longitude); }
