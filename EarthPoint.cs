@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 
 namespace Geographics
 {
     /// <summary>Представляет проекцию точки на земную сферу</summary>
     public struct EarthPoint
     {
+        private static readonly Regex _parsingExpression = new Regex(@"(?<lat>\d+([,\.]\d+)?)°?\s+(?<lon>\d+([,\.]\d+)?)°?");
         private Degree _latitude;
 
         private Degree _longitude;
@@ -53,5 +55,25 @@ namespace Geographics
         }
 
         public override string ToString() { return string.Format("{0} {1}", Latitude, Longitude); }
+
+        public static bool TryParse(string Value, out EarthPoint Point)
+        {
+            Match m = _parsingExpression.Match(Value);
+            if (!m.Success)
+            {
+                Point = default(EarthPoint);
+                return false;
+            }
+            Point = new EarthPoint(Double.Parse(m.Groups["lat"].Value),
+                                   Double.Parse(m.Groups["lon"].Value));
+            return true;
+        }
+
+        public static EarthPoint Parse(string Value)
+        {
+            EarthPoint p;
+            TryParse(Value, out p);
+            return p;
+        }
     }
 }
