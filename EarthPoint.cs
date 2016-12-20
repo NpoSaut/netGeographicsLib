@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Text.RegularExpressions;
 
 namespace Geographics
@@ -64,8 +65,8 @@ namespace Geographics
                 Point = default(EarthPoint);
                 return false;
             }
-            Point = new EarthPoint(Double.Parse(m.Groups["lat"].Value),
-                                   Double.Parse(m.Groups["lon"].Value));
+            Point = new EarthPoint(Double.Parse(m.Groups["lat"].Value.Replace(',', '.'), CultureInfo.InvariantCulture),
+                                   Double.Parse(m.Groups["lon"].Value.Replace(',', '.'), CultureInfo.InvariantCulture));
             return true;
         }
 
