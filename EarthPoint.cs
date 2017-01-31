@@ -9,7 +9,6 @@ namespace Geographics
     {
         private static readonly Regex _parsingExpression = new Regex(@"(?<lat>\d+([,\.]\d+)?)°?\s+(?<lon>\d+([,\.]\d+)?)°?");
         private Degree _latitude;
-
         private Degree _longitude;
 
         /// <summary>Создаёт новую точку со сферическими координатами</summary>
@@ -57,6 +56,8 @@ namespace Geographics
 
         public override string ToString() { return string.Format("{0} {1}", Latitude, Longitude); }
 
+        #region Parsing
+        
         public static bool TryParse(string Value, out EarthPoint Point)
         {
             Match m = _parsingExpression.Match(Value);
@@ -76,5 +77,30 @@ namespace Geographics
             TryParse(Value, out p);
             return p;
         }
+
+        #endregion
+
+        #region Equality
+
+        public bool Equals(EarthPoint other) { return _latitude.Equals(other._latitude) && _longitude.Equals(other._longitude); }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            return obj is EarthPoint && Equals((EarthPoint)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return (_latitude.GetHashCode() * 397) ^ _longitude.GetHashCode();
+            }
+        }
+
+        public static bool operator ==(EarthPoint left, EarthPoint right) { return left.Equals(right); }
+        public static bool operator !=(EarthPoint left, EarthPoint right) { return !left.Equals(right); }
+
+        #endregion
     }
 }
