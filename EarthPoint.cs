@@ -39,8 +39,8 @@ namespace Geographics
         /// <returns>True, если точка лежит внутри заданной прямоугольной области</returns>
         public bool IsInArea(EarthArea Area)
         {
-            return Longitude >= Area.MostWesternLongitude && Longitude <= Area.MostEasternLongitude &&
-                   Latitude >= Area.MostSouthernLatitude && Latitude <= Area.MostNorthenLatitude;
+            return Longitude.Value >= Area.MostWesternLongitude.Value && Longitude.Value <= Area.MostEasternLongitude.Value &&
+                   Latitude.Value >= Area.MostSouthernLatitude.Value && Latitude.Value <= Area.MostNorthenLatitude;
         }
 
         /// <summary>Получает точку, лежащую между указанными точками</summary>
