@@ -10,7 +10,7 @@ namespace Geographics
     public static class Mercator
     {
         /// <summary>Усреднённый радиус Земли</summary>
-        public const double R = 6.371e6;
+        private const double R = 6.371e6;
 
         /// <summary>Прямое преобразование Меркатора (со сферы на плоскость)</summary>
         /// <param name="p">Координаты точки на сфере</param>

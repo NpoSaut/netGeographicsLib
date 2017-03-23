@@ -5,16 +5,10 @@ namespace Geographics
     /// <summary>Величина угла в радианах</summary>
     public struct Radian : IComparable<Radian>
     {
-        private double _value;
-
-        public Radian(double value) { _value = value; }
+        public Radian(double value) { Value = value; }
 
         /// <summary>Значение величины угла в радианах</summary>
-        public double Value
-        {
-            get { return _value; }
-            set { _value = value; }
-        }
+        public double Value { get; private set; }
 
         /// <summary>Сравнивает текущий объект с другим объектом того же типа.</summary>
         /// <param name="other">Объект, который требуется сравнить с данным объектом.</param>

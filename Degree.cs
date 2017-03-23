@@ -5,16 +5,10 @@ namespace Geographics
     /// <summary>Величина угла в градусах</summary>
     public struct Degree : IComparable<Degree>
     {
-        private double _value;
-
-        public Degree(Double value) { _value = value; }
+        public Degree(Double value) { Value = value; }
 
         /// <summary>Значение величины угла в градусах</summary>
-        public double Value
-        {
-            get { return _value; }
-            set { _value = value; }
-        }
+        public double Value { get; private set; }
 
         /// <summary>Сравнивает текущий объект с другим объектом того же типа.</summary>
         /// <param name="other">Объект, который требуется сравнить с данным объектом.</param>

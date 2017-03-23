@@ -1,14 +1,13 @@
-﻿using System;
-
-namespace Geographics
+﻿namespace Geographics
 {
     /// <summary>Координата точки на плоскости</summary>
     public struct SurfacePoint
     {
         /// <summary>Горизонтальная координата</summary>
-        public Double X { get; set; }
+        public double X { get; private set; }
+
         /// <summary>Вертикальная координата</summary>
-        public Double Y { get; set; }
+        public double Y { get; private set; }
 
         public SurfacePoint(double X, double Y) : this()
         {
