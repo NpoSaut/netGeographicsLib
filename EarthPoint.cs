@@ -1,5 +1,5 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Geographics
@@ -7,7 +7,14 @@ namespace Geographics
     /// <summary>Представляет проекцию точки на земную сферу</summary>
     public struct EarthPoint
     {
-        private static readonly Regex _parsingExpression = new Regex(@"(?<lat>\d+([,\.]\d+)?)°?\s+(?<lon>\d+([,\.]\d+)?)°?");
+        private static readonly Regex[] _parsingExpressions =
+        {
+            new Regex(@"(?<lat>\d+([,\.]\d+)?)°?\s+(?<lon>\d+([,\.]\d+)?)°?"),
+            new Regex(@"http.+yandex.+?(?<lon>\d+\.\d+).+?(?<lat>\d+\.\d+)"),
+            new Regex(@"http.+google.+?(?<lat>\d+\.\d+).+?(?<lon>\d+\.\d+)"),
+            new Regex(@"(?<lat>\d+\.\d+).+?(?<lon>\d+\.\d+)")
+        };
+
         private Degree _latitude;
         private Degree _longitude;
 
@@ -23,15 +30,15 @@ namespace Geographics
         /// <summary>Широта</summary>
         public Degree Latitude
         {
-            get { return _latitude; }
-            set { _latitude = value; }
+            get => _latitude;
+            set => _latitude = value;
         }
 
         /// <summary>Долгота</summary>
         public Degree Longitude
         {
-            get { return _longitude; }
-            set { _longitude = value; }
+            get => _longitude;
+            set => _longitude = value;
         }
 
         /// <summary>Проверяет, попадает ли точка в заданную прямоугольную область</summary>
@@ -47,7 +54,7 @@ namespace Geographics
         /// <param name="Point1">Точка 1</param>
         /// <param name="Point2">Точка 2</param>
         /// <param name="Ratio">Доля участка между точками 1 и 2</param>
-        public static EarthPoint MiddlePoint(EarthPoint Point1, EarthPoint Point2, Double Ratio = 0.5)
+        public static EarthPoint MiddlePoint(EarthPoint Point1, EarthPoint Point2, double Ratio = 0.5)
         {
             return new EarthPoint(
                 (1 - Ratio) * Point1.Latitude + Ratio * Point2.Latitude,
@@ -57,17 +64,20 @@ namespace Geographics
         public override string ToString() { return string.Format("{0} {1}", Latitude, Longitude); }
 
         #region Parsing
-        
+
         public static bool TryParse(string Value, out EarthPoint Point)
         {
-            Match m = _parsingExpression.Match(Value);
-            if (!m.Success)
+            var match =
+                _parsingExpressions.Select(exp => exp.Match(Value))
+                                   .FirstOrDefault(m => m.Success);
+
+            if (match == null)
             {
                 Point = default(EarthPoint);
                 return false;
             }
-            Point = new EarthPoint(Double.Parse(m.Groups["lat"].Value.Replace(',', '.'), CultureInfo.InvariantCulture),
-                                   Double.Parse(m.Groups["lon"].Value.Replace(',', '.'), CultureInfo.InvariantCulture));
+            Point = new EarthPoint(double.Parse(match.Groups["lat"].Value.Replace(',', '.'), CultureInfo.InvariantCulture),
+                                   double.Parse(match.Groups["lon"].Value.Replace(',', '.'), CultureInfo.InvariantCulture));
             return true;
         }
 
