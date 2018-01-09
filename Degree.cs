@@ -6,8 +6,8 @@ namespace Geographics
     public struct Degree : IComparable<Degree>
     {
         public Degree(double value) { Value = value; }
-        public Degree(int    Degrees, double Minutes) : this(Degrees + Minutes / 60.0) { }
-        public Degree(int    Degrees, int    Minutes, double Seconds) : this(Degrees + (Minutes + Seconds / 60.0) / 60.0) { }
+
+        public Degree(int Degrees, double Minutes, double Seconds) : this(Degrees + (Minutes + Seconds / 60.0) / 60.0) { }
 
         /// <summary>Значение величины угла в градусах</summary>
         public double Value { get; }
